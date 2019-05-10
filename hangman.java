@@ -59,7 +59,7 @@ Color bgColor = new Color(0x00dddddd);
         hanged = false;
    }
 
-   // HangMan을 그리는 함수
+   // HangMan을 그리는 함수 test
    public void paint(Graphics g)
    {
      // newword버튼 위에 마우스가 올라가 있다면 흰색으로 배경색이 바뀌고
