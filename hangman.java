@@ -1,3 +1,8 @@
+import java.awt.*;
+import java.applet.*;
+import javax.swing.*;
+import java.awt.event.*;
+
 public class hangman extends Applet implements MouseListener, MouseMotionListener, KeyListener{
   // guessWord는 유저가 한 번에 단어를 맞췄을 때 넣어주는 String이고,
   // guessList는 유저가 지금까지 어떤 단어들을 추측했는지 보여주는 String이다.
@@ -59,7 +64,7 @@ Color bgColor = new Color(0x00dddddd);
         hanged = false;
    }
 
-   // HangMan을 그리는 함수 test111
+   // HangMan을 그리는 함수 test111 1111
    public void paint(Graphics g)
    {
 	   Paint painter = new Paint(g);
