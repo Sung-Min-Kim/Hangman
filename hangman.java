@@ -40,8 +40,9 @@ Color bgColor = new Color(0x00dddddd);
    //새로운 게임을 실행하는 메소드
    public void newGame()
    {
+	   GetHiddenWord hiddenWordGetter = new GetHiddenWord();
         //새로운 단어를 hiddenWord변수로 받는다.
-        hiddenWord = getHiddenWord();
+        hiddenWord = hiddenWordGetter.getHiddenWord();
         guessList = "";
         guessWord = "";
         // 새로운 hiddenWord길이 만큼 knownChars도 선언해준다.
@@ -104,31 +105,7 @@ Color bgColor = new Color(0x00dddddd);
 
    }
 
-   public String getHiddenWord() {
-     // 나올 수 있는 문제들 리스트
-      String[] wordList = {
-         "apple",
-         // "banana",
-         // "grape,",
-         // "strawberry",
-         // "orange",
-         //    "radio",
-         // "computer",
-         //    "car",
-         // "java",
-         //    "hello world",
-         // "hangman",
-         // "oodp",
-         //    "design pattern",
-         // "strategy method",
-         "I wanna go home"
-            };
-            // 하나를 고르고 lowercase로 변환해준다.
-      hiddenWord = wordList[(int)(Math.random()*(wordList.length+1))];
-      hiddenWord = hiddenWord.toLowerCase();
-
-      return hiddenWord;
-   }
+   
 
    // 한 번에 문자를 입력했을 때 맞았는지 아닌지 확인해주는 메소드
    public boolean validateGuess(String guess)
