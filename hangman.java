@@ -16,7 +16,7 @@ boolean[] knownChars;
 // 배경색깔이 어떤 색인지 담고있는 변수.
 Color bgColor = new Color(0x00dddddd);
 
-   //처음에 initialize해주는 메소드
+   //처음에 initialize해주는 메소드 고
    public void init()
    {
        this.addMouseListener(this);
