@@ -70,98 +70,37 @@ Color bgColor = new Color(0x00dddddd);
 	   Paint painter = new Paint(g);
      // newword버튼 위에 마우스가 올라가 있다면 흰색으로 배경색이 바뀌고
      // 아니라면 회색으로 변하게 한다.
-      if (mouseOver)
-         g.setColor(Color.white);
-      else
-         g.setColor(new Color(0x00eeeeee));
+	   painter.mouseOverHandler(mouseOver);
+      
       // newword 버튼을 좌표를 지정해줘서 만들어주는 과정
-      g.fillRect(50, 60, 100, 30);
-      g.setColor(new Color(0x00aaaaaa));
-      g.drawRect(49, 59, 102, 32);
-      g.setColor(Color.black);
-      g.setFont(new Font("Helvetica", Font.BOLD, 16));
-      g.drawString("new word", 64, 80);
-      g.setFont(new Font("Helvetica", Font.BOLD, 32));
-
+	   painter.makeNewgameButton();
+      
       // 단두대를 그려주는 과정
-      g.drawLine(50,550,375,550);
-      g.drawLine(150,550,150,150);
-      g.drawLine(150,150,375,150);
-      g.drawLine(375,150,375,199);
-
+	   painter.makeHanger();
+      
       // hiddenWord를 이쁘게 화면에 나타나게 하기 위해서 단어마다 공간을 주려고
       // hiddenWord의 길이-1의 2배를 해서 각 글자마다 공간을 줘서
       // 각 단어를 '_'로 화면에 표시해주는 부분
-      for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
-      {
-         if (i%2 == 0)
-         {
-            if (hiddenWord.charAt(i/2) != ' ')
-               g.drawLine(i*15+225,100,(i+1)*15+225,100);
-            if (knownChars[i/2] == true)
-               g.drawString(""+hiddenWord.charAt(i/2), i*15+224, 95);
-         }
-      }
+	   painter.showHiddenWord(hiddenWord, knownChars);
+      
       // 행맨 그리기
-      switch (missCount)
-      {
-      // missCount가 7이 되었을 때 HangMan이 목을 조르는 애니메이션
-      case 7: animateHang(g); break;
-      // 왼쪽 팔
-      case 6: g.drawLine(375,270,300,280);
-      // 오른쪽 팔
-      case 5: g.drawLine(375,270,450,280);
-      // 왼쪽 다리
-      case 4: g.drawLine(375,400,325,450);
-      // 오른쪽 다리
-      case 3: g.drawLine(375,400,425,450);
-      // 몸통
-      case 2: g.drawLine(375,250,375,400);
-      // 얼굴
-      case 1: {g.drawOval(349,199,51,51); g.setColor(new Color(0x00ffcc99)); g.fillOval(350,200,50,50);}
-      }
-
+	   painter.drawHangman(missCount, hanged, bgColor);
+      
 
       // 유저가 추측한 단어들을 화면에 보여주는 부분
-      g.setColor(Color.black);
-      for(int i=0; i<guessList.length(); i++)
-      {
-         g.drawString(""+guessList.charAt(i),50+i*28,40);
-      }
+	   painter.showGuessWord(guessList);
+      
 
       // 유저가 전체 단어를 주어진 목숨안에 맞춘경우 맞춘 단어를 보여주고 이겼다는 화면을 보여준다.
-      if (win == true)
-      {
-         g.setColor(new Color(0x00009900));
-         g.drawString("You Win!",600,200);
-         gameOver = true;
-         for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
-         {
-            if (i%2 == 0)
-            {
-               g.drawString(""+hiddenWord.charAt(i/2), i*15+224, 95);
-            }
-         }
-      }
+	   painter.showWin(win, gameOver, hiddenWord);
+      
       // 유저가 전체 단어를 주어진 목숨안에 못맞춘경우 맞춘 단어를 보여주고 졌다는 화면을 보여준다.
-      if (missCount == maxMisses)
-      {
-         g.setColor(Color.red);
-         g.drawString("You Lose!",600,200);
-         gameOver = true;
-         for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
-         {
-            if (i%2 == 0)
-            {
-               g.drawString(""+hiddenWord.charAt(i/2), i*15+224, 95);
-            }
-         }
-      }
+	   painter.showLose(missCount, maxMisses, gameOver, hiddenWord);
+      
 
       // 실수를 몇번 했는지 보여주는 부분
-      g.setColor(Color.black);
-      g.setFont(new Font("Helvetica", Font.BOLD, 16));
-      g.drawString("Misses: "+missCount,155,168);
+	   painter.showMises(missCount);
+      
 
    }
 
