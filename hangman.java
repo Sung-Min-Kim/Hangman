@@ -62,6 +62,7 @@ Color bgColor = new Color(0x00dddddd);
    // HangMan을 그리는 함수 test111
    public void paint(Graphics g)
    {
+	   Paint painter = new Paint(g);
      // newword버튼 위에 마우스가 올라가 있다면 흰색으로 배경색이 바뀌고
      // 아니라면 회색으로 변하게 한다.
       if (mouseOver)
