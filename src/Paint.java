@@ -11,6 +11,7 @@ public class Paint {
         this.g = g;
     }
 	
+	//mouse관련메소
 	public void mouseOverHandler(boolean mouseOver) {
 		if (mouseOver)
 	       g.setColor(Color.white);
@@ -18,6 +19,7 @@ public class Paint {
 	       g.setColor(new Color(0x00eeeeee));
 	}
 	
+	//버튼 
 	public void makeNewgameButton() {
 		g.fillRect(50, 60, 100, 30);
 	    g.setColor(new Color(0x00aaaaaa));
@@ -28,26 +30,10 @@ public class Paint {
 	    g.setFont(new Font("Helvetica", Font.BOLD, 32));
 	}
 	
-	public void makeHanger() {
-		  g.drawLine(50,550,375,550);
-	      g.drawLine(150,550,150,150);
-	      g.drawLine(150,150,375,150);
-	      g.drawLine(375,150,375,199);
-	}
+
 	
-	public void showHiddenWord(String hiddenWord, boolean[] knownChars) {
-		for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
-	      {
-	         if (i%2 == 0)
-	         {
-	            if (hiddenWord.charAt(i/2) != ' ')
-	               g.drawLine(i*15+225,100,(i+1)*15+225,100);
-	            if (knownChars[i/2] == true)
-	               g.drawString(""+hiddenWord.charAt(i/2), i*15+224, 95);
-	         }
-	      }
-	}
 	
+	//행맨 그리는 함수 
 	public void drawHangman(int missCount, boolean hanged, Color bgColor) {
 		switch (missCount)
 	      {
@@ -69,7 +55,7 @@ public class Paint {
 	}
 	
 	
-	
+	//행맨 애니메이션 
 	public void animateHang(boolean hanged, Color bgColor)
 	   {
 	      hanged = true;
@@ -127,14 +113,31 @@ public class Paint {
 
 	   }
 	
-	public void showGuessWord(String guessList) {
-		g.setColor(Color.black);
-	      for(int i=0; i<guessList.length(); i++)
-	      {
-	         g.drawString(""+guessList.charAt(i),50+i*28,40);
-	      }
-	}
 	
+	// 맞춰야 되는 단어 맞추면 보여주는 함수 
+		public void showHiddenWord(String hiddenWord, boolean[] knownChars) {
+			for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
+		      {
+		         if (i%2 == 0)
+		         {
+		            if (hiddenWord.charAt(i/2) != ' ')
+		               g.drawLine(i*15+225,100,(i+1)*15+225,100);
+		            if (knownChars[i/2] == true)
+		               g.drawString(""+hiddenWord.charAt(i/2), i*15+224, 95);
+		         }
+		      }
+		}
+		
+		// 유저가 입력한 단어 보여주는 함수 
+		public void showGuessWord(String guessList) {
+			g.setColor(Color.black);
+		      for(int i=0; i<guessList.length(); i++)
+		      {
+		         g.drawString(""+guessList.charAt(i),50+i*28,40);
+		      }
+		}
+	
+	// 이기면 메시지 보여주기 
 	public void showWin(boolean win, boolean gameOver, String hiddenWord) {
 		if (win == true)
 	      {
@@ -151,6 +154,7 @@ public class Paint {
 	      }
 	}
 	
+	// 지면 메시지 보여주기 
 	public void showLose(int missCount, int maxMisses, boolean gameOver, String hiddenWord) {
 		if (missCount == maxMisses)
 	      {
@@ -167,6 +171,7 @@ public class Paint {
 	      }
 	}
 	
+	// 몇번 실수했는지 보여주기 
 	public void showMisses(int missCount) {
 		g.setColor(Color.black);
 	      g.setFont(new Font("Helvetica", Font.BOLD, 16));

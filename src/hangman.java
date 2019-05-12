@@ -77,10 +77,6 @@ Color bgColor = new Color(0x00dddddd);
       // newword 버튼을 좌표를 지정해줘서 만들어주는 과정
 	   painter.makeNewgameButton();
       
-      // 단두대를 그려주는 과정
-	   painter.makeHanger();
-      
-	   painter.makeNewgameButton();
       
       // 단두대를 그려주는 과정 -> 싱글톤으로 구현
 	   Hanger hanger = new Hanger();
