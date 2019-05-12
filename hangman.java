@@ -76,8 +76,11 @@ Color bgColor = new Color(0x00dddddd);
       // newword 버튼을 좌표를 지정해줘서 만들어주는 과정
 	   painter.makeNewgameButton();
       
-      // 단두대를 그려주는 과정
-	   painter.makeHanger();
+      // 단두대를 그려주는 과정 -> 싱글톤으로 구현
+	   Hanger hanger = new Hanger();
+	   hanger = hanger.getHangerObject();
+	   hanger.setGraphic(g);
+	   hanger.makeHanger();
       
       // hiddenWord를 이쁘게 화면에 나타나게 하기 위해서 단어마다 공간을 주려고
       // hiddenWord의 길이-1의 2배를 해서 각 글자마다 공간을 줘서
