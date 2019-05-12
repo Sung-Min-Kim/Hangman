@@ -276,62 +276,6 @@ Color bgColor = new Color(0x00dddddd);
          repaint();
    }
 
-   //HangMan이 자기 목을 잡는 애니메이션이다. 얼굴색이 빨간색에서 파란색, 보라색을 바뀐다.
-   public void animateHang(Graphics g)
-   {
-      hanged = true;
-
-      g.setColor(Color.black);
-      // 팔
-      g.drawLine(375,270,335,280);
-      g.drawLine(375,270,415,280);
-      g.drawLine(335,280,375,250);
-      g.drawLine(415,280,375,250);
-      // 다리
-      g.drawLine(375,400,350,375);
-      g.drawLine(375,400,400,375);
-      g.drawLine(350,375,350,400);
-      g.drawLine(400,375,400,400);
-      // 몸통
-      g.drawLine(375,250,375,400);
-      // 얼굴
-      g.drawOval(349,199,51,51);
-      // 얼굴 애니메이션
-      int c;
-      for (int i=0; i<22000; i++)
-      {
-         c = i/1000;
-         Color faceHue = new Color(255-c,0,c);
-         g.setColor(faceHue);
-         // 현재 색깔로 얼굴을 그려라
-         g.fillOval(350,200,50,50);
-      }
-
-      g.setColor(bgColor);
-      // 팔
-      g.drawLine(375,270,335,280);
-      g.drawLine(375,270,415,280);
-      g.drawLine(335,280,375,250);
-      g.drawLine(415,280,375,250);
-      // 다리
-      g.drawLine(375,400,350,375);
-      g.drawLine(375,400,400,375);
-      g.drawLine(350,375,350,400);
-      g.drawLine(400,375,400,400);
-
-
-      g.setColor(Color.black);
-      g.drawLine(375,250,375,400);
-      // 팔과 다리를 지운다.
-      // 왼쪽 팔
-      g.drawLine(375,270,370,330);
-      // 오른쪽 팔
-      g.drawLine(375,270,380,330);
-      // 왼다리
-      g.drawLine(375,400,370,460);
-      // 오른다리
-      g.drawLine(375,400,380,460);
-
-   }
+   
 
 }
