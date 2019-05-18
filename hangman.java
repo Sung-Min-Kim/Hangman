@@ -31,11 +31,6 @@ Choice level = null;
        this.addMouseMotionListener(this);
        this.addKeyListener(this);
       
-       
-       Choice level = new Choice();
-       level.add("Level1");
-       level.add("Level2");
-       level.addItemListener(this);
        // 화면의 크기를 조정하고 배경색을 정한다.
       setSize(1000,625);
       setBackground(bgColor);
@@ -50,12 +45,13 @@ Choice level = null;
    
    public void newGame()
    {	
-	   String[] items = { "level1", "level2" };
+	   
+	   //level combobox 만들
+	   String[] items = { "level1", "level2","level3" };
 	    JComboBox cb = new JComboBox(items);
 	    final JPanel mainPanel = new JPanel();
 	      mainPanel.setPreferredSize(new Dimension(250, 100));
 	      mainPanel.add(new JButton(new AbstractAction("Level") {
-
 	          @Override
 	          public void actionPerformed(ActionEvent arg0) {
 	        	 cb.setVisible(!cb.isVisible());
@@ -66,41 +62,59 @@ Choice level = null;
 	       mainPanel.add(cb);
 
 	       JOptionPane.showMessageDialog(null, mainPanel);
-
+	       
+	       Level level1 = new Level1();
+		   Level level2 = new Level2();
+		   Level level3 = new Level3();
+		   
+		   //level에 맞게 단어 가져오
 		   if(cb.getSelectedItem() =="level1"){
-			   Level1 level1 = new Level1();
 			   hiddenWord = level1.getHiddenWord();
 		   }	
 		   if(cb.getSelectedItem() =="level2"){
-			   Level2 level2 = new Level2();
 			   hiddenWord = level2.getHiddenWord();
 		   }	
+		   if(cb.getSelectedItem() =="level3"){
+			   hiddenWord = level3.getHiddenWord();
+		   }	
 		   
-//	   GetHiddenWord hiddenWordGetter = new GetHiddenWord();
-        //새로운 단어를 hiddenWord변수로 받는다.
-        
-        guessList = "";
-        guessWord = "";
-        // 새로운 hiddenWord길이 만큼 knownChars도 선언해준다.
-        knownChars = new boolean[hiddenWord.length()];
-        // knownChars를 초기화해주는과정, if-else문이 의미하는 바는
-        // hiddenWord에 space가 포함이 되어 있을 때가 있는데,
-        // space가 있는 공간은 추측을 할 필요가 없으므로 그냥 True로 둔다는 의미.        for (int i=0; i<hiddenWord.length(); i++)
-        for (int i=0; i<hiddenWord.length(); i++)
-        {
-           if (hiddenWord.charAt(i) == ' ')
-              knownChars[i] = true;
-           else
-              knownChars[i] = false;
-        }
-        // 변수들 초기화
-        win = false;
-        missCount = 0;
-        maxMisses = 7;
-        gameOver = false;
-        hanged = false;
+		   
+	   guessList = "";
+       guessWord = "";
+       // 새로운 hiddenWord길이 만큼 knownChars도 선언해준다.
+       knownChars = new boolean[hiddenWord.length()];
+       // knownChars를 초기화해주는과정, if-else문이 의미하는 바는
+       // hiddenWord에 space가 포함이 되어 있을 때가 있는데,
+       // space가 있는 공간은 추측을 할 필요가 없으므로 그냥 True로 둔다는 의미.        for (int i=0; i<hiddenWord.length(); i++)
+       for (int i=0; i<hiddenWord.length(); i++)
+       {
+          if (hiddenWord.charAt(i) == ' ')
+             knownChars[i] = true;
+          else
+             knownChars[i] = false;
+       }
+       // 변수들 초기화
+       win = false;
+       missCount = 0;
+       maxMisses = 7;
+       gameOver = false;
+       hanged = false;
+       
+      //level에 맞게 hint를 줌
+      //level1 - 첫단어와 마지막 단어 알려줌
+      //level2 - 첫단어 알려줌
+      //level3 - 안알랴줌
+       
+		   if(cb.getSelectedItem() =="level1"){
+			   level1.setHintStrategy(new showTwoLetter());
+			   knownChars = level1.hint(hiddenWord,knownChars);
+		   }	 
+		   if(cb.getSelectedItem() =="level2"){
+			   level2.setHintStrategy(new showOneLetter());	
+			   knownChars = level2.hint(hiddenWord,knownChars);
+		   }	   
    }
-
+   
    // HangMan을 그리는 함수
    public void paint(Graphics g)
    {
@@ -112,7 +126,7 @@ Choice level = null;
       // newword 버튼을 좌표를 지정해줘서 만들어주는 과정
 	   painter.makeNewgameButton();
       
-      
+	   System.out.println("Hanger:"+knownChars[0]); 
       // 단두대를 그려주는 과정 -> 싱글톤으로 구현
 	   Hanger hanger = new Hanger();
 	   hanger = hanger.getHangerObject();
@@ -280,8 +294,6 @@ Choice level = null;
     public void mouseEntered(MouseEvent e){}
     public void mouseDragged(MouseEvent e){}
     public void mousePressed (MouseEvent mouseEvent) {
-    //  mouseX = mouseEvent.getX();
-    //  mouseY = mouseEvent.getY();
      if ((mouseEvent.getX() >50 && mouseEvent.getX() <150) && (mouseEvent.getY() >60 && mouseEvent.getY() <90))
       {
          newGame();
@@ -290,9 +302,6 @@ Choice level = null;
      }
 
      public void mouseClicked (MouseEvent mouseEvent) {
-    //  mouseX = mouseEvent.getX();
-    //  mouseY = mouseEvent.getY();
-      //  to detect crosses over the boundaries of the button
       // otherwise it would repaint needlessly
       boolean mouseToogle = mouseOver;
       if ((mouseEvent.getX()>50 && mouseEvent.getX()<150) && (mouseEvent.getY()>60 && mouseEvent.getY()<90))
@@ -308,12 +317,4 @@ Choice level = null;
       if (mouseToogle != mouseOver && !hanged)
          repaint();
    }
-
-   
-@Override
-public void itemStateChanged(ItemEvent e) {
-	// TODO Auto-generated method stub
-	
-}
-
 }
