@@ -1,17 +1,15 @@
-
-
-import java.awt.*;
+import java.awt.*; 
 import java.applet.*;
-import javax.swing.*;
+import javax.swing.*;  
 import java.awt.event.*;
-import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
-
+ 
 public abstract class Level {
-public	String hiddenWord ="";
-	void getHiddenWord(int level){
-		getHiddenWord();
-		   }
-	
+	public HintStrategy hintStrategy;
 	abstract String getHiddenWord();
+	public boolean[] hint(String hiddenWord, boolean[] knownChars){ return hintStrategy.hint(hiddenWord,knownChars); }
+	public void setHintStrategy(HintStrategy hintStrategy){
+		this.hintStrategy = hintStrategy;
+	}
+  
+	
 }
