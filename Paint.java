@@ -4,6 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+//package InputOutputStream;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+
 //test
 public class Paint {
 	public Graphics g;
@@ -144,7 +153,8 @@ public class Paint {
 		if (win == true)
 	      {
 	         g.setColor(new Color(0x00009900));
-	         g.drawString("You Win!",600,200);
+	         g.setColor(Color.CYAN);
+	         g.drawString("You Win!",600,50);
 	         gameOver = true;
 	         for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
 	         {
@@ -153,6 +163,9 @@ public class Paint {
 	               g.drawString(""+hiddenWord.charAt(i/2), i*15+224, 95);
 	            }
 	         }
+	         
+	         
+	         
 	      }
 	}
 	
@@ -161,7 +174,7 @@ public class Paint {
 		if (missCount == maxMisses)
 	      {
 	         g.setColor(Color.red);
-	         g.drawString("You Lose!",600,200);
+	         g.drawString("You Lose!",600,50);
 	         gameOver = true;
 	         for(int i=0; i<=(hiddenWord.length()-1)*2; i++)
 	         {

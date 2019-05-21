@@ -24,6 +24,8 @@ boolean[] knownChars;
 // 배경색깔이 어떤 색인지 담고있는 변수.
 Color bgColor = new Color(0x00dddddd);
 Choice level = null;
+//랭킹에 등록하기 위한 점수를 저장해두는 변수.
+float userScore;
    //처음에 initialize해주는 메소드 고
    public void init()
    {
@@ -47,7 +49,7 @@ Choice level = null;
    {	
 	   
 	   //level combobox 만들
-	   String[] items = { "level1", "level2","level3" };
+	   String[] items = { "level1","level2","level3" };
 	    JComboBox cb = new JComboBox(items);
 	    final JPanel mainPanel = new JPanel();
 	      mainPanel.setPreferredSize(new Dimension(250, 100));
@@ -76,9 +78,7 @@ Choice level = null;
 		   }	
 		   if(cb.getSelectedItem() =="level3"){
 			   hiddenWord = level3.getHiddenWord();
-		   }	
-		   
-		   
+		   }		   
 	   guessList = "";
        guessWord = "";
        // 새로운 hiddenWord길이 만큼 knownChars도 선언해준다.
@@ -86,13 +86,7 @@ Choice level = null;
        // knownChars를 초기화해주는과정, if-else문이 의미하는 바는
        // hiddenWord에 space가 포함이 되어 있을 때가 있는데,
        // space가 있는 공간은 추측을 할 필요가 없으므로 그냥 True로 둔다는 의미.        for (int i=0; i<hiddenWord.length(); i++)
-       for (int i=0; i<hiddenWord.length(); i++)
-       {
-          if (hiddenWord.charAt(i) == ' ')
-             knownChars[i] = true;
-          else
-             knownChars[i] = false;
-       }
+      
        // 변수들 초기화
        win = false;
        missCount = 0;
@@ -109,10 +103,11 @@ Choice level = null;
 			   level1.setHintStrategy(new showTwoLetter());
 			   knownChars = level1.hint(hiddenWord,knownChars);
 		   }	 
+		
 		   if(cb.getSelectedItem() =="level2"){
 			   level2.setHintStrategy(new showOneLetter());	
 			   knownChars = level2.hint(hiddenWord,knownChars);
-		   }	   
+		   }	  
    }
    
    // HangMan을 그리는 함수
@@ -122,11 +117,11 @@ Choice level = null;
      // newword버튼 위에 마우스가 올라가 있다면 흰색으로 배경색이 바뀌고
      // 아니라면 회색으로 변하게 한다.
 	   painter.mouseOverHandler(mouseOver);
-      
+	  
       // newword 버튼을 좌표를 지정해줘서 만들어주는 과정
 	   painter.makeNewgameButton();
       
-	   System.out.println("Hanger:"+knownChars[0]); 
+	
       // 단두대를 그려주는 과정 -> 싱글톤으로 구현
 	   Hanger hanger = new Hanger();
 	   hanger = hanger.getHangerObject();
@@ -147,6 +142,16 @@ Choice level = null;
 	   painter.showLose(missCount, maxMisses, gameOver, hiddenWord);
       // 실수를 몇번 했는지 보여주는 부분
 	   painter.showMisses(missCount);
+	   for(int i=0; i<hiddenWord.length(); i++){
+		   System.out.println("knowchar:"+knownChars[i]); 
+	   }
+	// 랭킹보여주기 - 싱글톤 적용
+	   Ranking rank = new Ranking();
+	   rank = rank.getRankingObject();
+	   rank.setGraphic(g);
+	   rank.showRanking(win, missCount, maxMisses);
+	   rank.enterUserName(win, userScore); 
+	   rank.showMap();
    }
 
   
