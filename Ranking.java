@@ -2,24 +2,24 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.io.PrintWriter;
-
 
 import javax.swing.JOptionPane;
 
 public class Ranking {
 	private static volatile Ranking rank = new Ranking();
 	public Graphics g;
-	
-	private TreeMap<Float, String> map ;
+	private static final TreeMap<Float, String> map = new TreeMap<>();
 
 	public int userCount = 0;
 	public String userName;
@@ -36,7 +36,7 @@ public class Ranking {
 		this.g = g;
 	}
 	
-	public void showRanking(boolean win, int missCount, int maxMisses) {
+	public void showRanking(boolean win, int missCount, int maxMisses, int userScore) {
 		if ((win == true) || (missCount == maxMisses))
 	      {
 	         g.setColor(Color.BLACK);
@@ -67,30 +67,20 @@ public class Ranking {
 	          }catch(IOException e){
 	              System.out.println(e);
 	          }
+	  	      
+	  	      System.out.println("User Score: " + userScore);
 	      }
 	}
 	
 	//guessWord = JOptionPane.showInputDialog(null, "Guess the entire word:");
-	public void enterUserName(boolean win, float userScore, TreeMap<Float, String> map) {
+	public void enterUserName(boolean win, float userScore) {
 		if(win == true) {
 			userName = JOptionPane.showInputDialog(null, "Enter User Name:");
-			
-			
-			
-			
-//			PrintWriter pw = new PrintWriter("/Users/sungminkim/Desktop/WTF.txt");
-//	        for(int i=1; i<11; i++) {
-//	            String data = i+" 번째 줄입니다.";
-//	            float haha = 10;
-//	            pw.println(haha + "/" + data);
-//	        }
-//	        pw.close();	
-//			
 			map.put(userScore, userName);
 		}
 	}
 	
-	public void showMap(TreeMap<Float, String> map) {
+	public void showMap() {
 		Set<Entry<Float, String>> entries = map.entrySet();
 //        map = {1=one, 2=two, A=a, B=b, a=A, b=B, 가=ㄱ, 나=ㄴ}
         System.out.println("map = " + map);
@@ -99,5 +89,19 @@ public class Ranking {
             System.out.println(tempEntry.getValue() + " = " + tempEntry.getKey());
         }
         System.out.println("End!");
+        try {
+            ////////////////////////////////////////////////////////////////
+            BufferedWriter out = new BufferedWriter(new FileWriter("out.txt",true));
+            String s = entries.toString();
+
+            out.write(s);
+
+            out.close();
+            ////////////////////////////////////////////////////////////////
+          } catch (IOException e) {
+              System.err.println(e); // 에러가 있다면 메시지 출력
+              System.exit(1);
+          }
+
 	}
 }

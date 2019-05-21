@@ -2,9 +2,11 @@ import java.awt.*;
 import java.applet.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 
 public class hangman extends Applet implements MouseListener, MouseMotionListener, KeyListener,ItemListener{
   // guessWord는 유저가 한 번에 단어를 맞췄을 때 넣어주는 String이고1,
@@ -25,7 +27,13 @@ boolean[] knownChars;
 Color bgColor = new Color(0x00dddddd);
 Choice level = null;
 //랭킹에 등록하기 위한 점수를 저장해두는 변수.
-float userScore;
+int userScore;
+//새로운 게임이 얼마나 걸렸는지 시간을 재주기 위한 변수 -> 점수계산목적 
+long startTime = 0, endTime = 0;
+//몇 개를 맞췄는지 저장해놓은 변수 -> 점수계산목적
+int rightCount = 0;
+//레벨 별 점수 계산을 위한 변수 
+int levelChoice;
    //처음에 initialize해주는 메소드 고
    public void init()
    {
@@ -47,7 +55,8 @@ float userScore;
    
    public void newGame()
    {	
-	   
+//	   System.out.println("Start Time Calculated!");
+	   startTime = System.currentTimeMillis();
 	   //level combobox 만들
 	   String[] items = { "level1","level2","level3" };
 	    JComboBox cb = new JComboBox(items);
@@ -72,12 +81,15 @@ float userScore;
 		   //level에 맞게 단어 가져오
 		   if(cb.getSelectedItem() =="level1"){
 			   hiddenWord = level1.getHiddenWord();
+			   levelChoice = 1;
 		   }	
 		   if(cb.getSelectedItem() =="level2"){
 			   hiddenWord = level2.getHiddenWord();
+			   levelChoice = 2;
 		   }	
 		   if(cb.getSelectedItem() =="level3"){
 			   hiddenWord = level3.getHiddenWord();
+			   levelChoice = 3;
 		   }		   
 	   guessList = "";
        guessWord = "";
@@ -145,13 +157,57 @@ float userScore;
 	   for(int i=0; i<hiddenWord.length(); i++){
 		   System.out.println("knowchar:"+knownChars[i]); 
 	   }
+	   
+	   
+	   /* 점수계산 Section */
+	   //시간별 점수  
+	   if(win == true) {
+//		   System.out.println("End Time Calculated!");
+		   endTime = System.currentTimeMillis();
+		   float timeTaken = (float)(endTime - startTime) / 1000;
+		   System.out.println("걸린 시간: " + timeTaken + " 초");
+		   int second = (int)timeTaken;
+		   System.out.println("Second: " + second);
+		   
+		   switch(second) {
+		   		case 0: userScore += 250; break;
+		   		case 1: userScore += 200; break;
+		   		case 2: userScore += 150; break;
+		   		case 3: userScore += 100; break;
+		   		case 4: userScore += 50; break;
+		   		default: break;
+		   }
+	   }
+	   
+	   //맞춘개수 점수 
+	   if(win == true) {
+		   rightCount = 7 - missCount; // 맞춘 개수
+//		   System.out.println("Right Count: " + rightCount);
+		   userScore = rightCount * 100; // 맞춘 개수 * 100점  
+	   }
+	   
+	   //난이도 점수  
+	   if(win == true) {
+		   switch(levelChoice) {
+		   		case 1: userScore += 100; break;
+		   		case 2: userScore += 200; break;
+		   		case 3: userScore += 300; break;
+		   }
+	   }
+	   
+	   
+	   
 	// 랭킹보여주기 - 싱글톤 적용
 	   Ranking rank = new Ranking();
 	   rank = rank.getRankingObject();
 	   rank.setGraphic(g);
-	   rank.showRanking(win, missCount, maxMisses);
-	   rank.enterUserName(win, userScore); 
+	   rank.showRanking(win, missCount, maxMisses, userScore);	 
+	   
+	   
+	   rank.enterUserName(win, userScore);
 	   rank.showMap();
+	   
+	   
    }
 
   
