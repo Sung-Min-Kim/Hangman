@@ -6,18 +6,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.io.PrintWriter;
+
 
 import javax.swing.JOptionPane;
 
 public class Ranking {
 	private static volatile Ranking rank = new Ranking();
 	public Graphics g;
-	private static final TreeMap<Float, String> map = new TreeMap<>();
+	
+	private TreeMap<Float, String> map ;
 
 	public int userCount = 0;
 	public String userName;
@@ -69,14 +71,26 @@ public class Ranking {
 	}
 	
 	//guessWord = JOptionPane.showInputDialog(null, "Guess the entire word:");
-	public void enterUserName(boolean win, float userScore) {
+	public void enterUserName(boolean win, float userScore, TreeMap<Float, String> map) {
 		if(win == true) {
 			userName = JOptionPane.showInputDialog(null, "Enter User Name:");
+			
+			
+			
+			
+//			PrintWriter pw = new PrintWriter("/Users/sungminkim/Desktop/WTF.txt");
+//	        for(int i=1; i<11; i++) {
+//	            String data = i+" 번째 줄입니다.";
+//	            float haha = 10;
+//	            pw.println(haha + "/" + data);
+//	        }
+//	        pw.close();	
+//			
 			map.put(userScore, userName);
 		}
 	}
 	
-	public void showMap() {
+	public void showMap(TreeMap<Float, String> map) {
 		Set<Entry<Float, String>> entries = map.entrySet();
 //        map = {1=one, 2=two, A=a, B=b, a=A, b=B, 가=ㄱ, 나=ㄴ}
         System.out.println("map = " + map);
