@@ -137,7 +137,7 @@ int levelChoice;
       // 단두대를 그려주는 과정 -> 싱글톤으로 구현
 	   Hanger hanger = new Hanger();
 	   hanger = hanger.getHangerObject();
-	   hanger.setGraphic(g); 
+	   hanger.setGraphic(g);
 	   hanger.makeHanger();
       
       // hiddenWord를 이쁘게 화면에 나타나게 하기 위해서 단어마다 공간을 주려고

@@ -49,7 +49,7 @@ public class Ranking {
 	              File file = new File("/Users/sungminkim/git/Hangman/Ranking.txt");
 	              int count = 0;
 	              String str;
-	               
+	              
 	              //입력 스트림 생성
 	              FileReader filereader = new FileReader(file);
 	              //입력 버퍼 생성
