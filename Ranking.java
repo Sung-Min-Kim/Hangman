@@ -34,7 +34,7 @@ public class Ranking {
 	
 	public void setGraphic(Graphics g) {
 		this.g = g;
-	}
+	} 
 	
 	public void showRanking(boolean win, int missCount, int maxMisses, int userScore) {
 		if ((win == true) || (missCount == maxMisses))

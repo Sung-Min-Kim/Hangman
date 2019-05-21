@@ -173,7 +173,7 @@ int levelChoice;
 		   		case 0: userScore += 250; break;
 		   		case 1: userScore += 200; break;
 		   		case 2: userScore += 150; break;
-		   		case 3: userScore += 100; break;
+		   		case 3: userScore += 100; break; 
 		   		case 4: userScore += 50; break;
 		   		default: break;
 		   }
