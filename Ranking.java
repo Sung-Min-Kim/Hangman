@@ -91,6 +91,7 @@ public class Ranking {
         System.out.println("End!");
         try {
             ////////////////////////////////////////////////////////////////
+        	System.out.println("File is about to be made");
             BufferedWriter out = new BufferedWriter(new FileWriter("out.txt",true));
             String s = entries.toString();
 
