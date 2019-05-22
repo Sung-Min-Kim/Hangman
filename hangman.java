@@ -11,29 +11,29 @@ import java.io.IOException;
 public class hangman extends Applet implements MouseListener, MouseMotionListener, KeyListener,ItemListener{
   // guessWord는 유저가 한 번에 단어를 맞췄을 때 넣어주는 String이고1,
   // guessList는 유저가 지금까지 어떤 단어들을 추측했는지 보여주는 String이다.
-String hiddenWord="", guessWord, guessList;
+public static String hiddenWord="", guessWord, guessList;
 // 잘못된 단어를 몇 번 했는가 count하는 변수.
-int missCount;
+public static int missCount;
 // 몇 번까지 실수가 허용되는지를 담고있는 변수.
-int maxMisses;
+public static int maxMisses;
 // mouseOver은 newgame 버튼 위에 있는지 없는지의 정보를 담고있는 변수.
 // win과 gameOver는 게임을 이겼는지 졌는지의 정보를 담고있는 변수.
-boolean win, gameOver, mouseOver = true;
+public static boolean win, gameOver, mouseOver = true;
 // 게임이 끝났는지 아닌지 확인해서 끝났으면 hanged가 true가 된다.
-boolean hanged;
+public static boolean hanged;
 // Random하게 나온 단어들과 같은 길이의 배열이다. 유저가 어떤 단어들을 알고있는지의 정보를 담고있다.
-boolean[] knownChars;
+public static boolean[] knownChars;
 // 배경색깔이 어떤 색인지 담고있는 변수.
-Color bgColor = new Color(0x00dddddd);
-Choice level = null;
+public static Color bgColor = new Color(0x00dddddd);
+public Choice level = null;
 //랭킹에 등록하기 위한 점수를 저장해두는 변수.
-int userScore;
+public static int userScore;
 //새로운 게임이 얼마나 걸렸는지 시간을 재주기 위한 변수 -> 점수계산목적 
-long startTime = 0, endTime = 0;
+public static long startTime = 0, endTime = 0;
 //몇 개를 맞췄는지 저장해놓은 변수 -> 점수계산목적
-int rightCount = 0;
+public static int rightCount = 0;
 //레벨 별 점수 계산을 위한 변수 
-int levelChoice;
+public static int levelChoice;
    //처음에 initialize해주는 메소드 고
    public void init()
    {
@@ -211,79 +211,29 @@ int levelChoice;
    }
 
   
-	
-
+   
 
    
    public void keyPressed( KeyEvent e ) { 
+	   enterAlphabet enAl = new enterAlphabet(e);
+	   enterWord enWord= new enterWord(e);
+	   
        char keyChar = e.getKeyChar();
        if (!gameOver)
         {
-        boolean rightGuess = false;
+         boolean rightGuess = false;
         // Cast the "key pressed" to a character
         if (keyChar != ' ')
         {
-           // if character has previously been choosen, then get out of this method
-           for(int i=0; i<guessList.length(); i++)
-           {
-              // if character is not alphabet, alert the message
-              if(!Character.isAlphabetic(keyChar)){
-                 JOptionPane.showMessageDialog(this, "please only alphabet ('a'-'z')","Java Hangman - by OODP B_team", JOptionPane.INFORMATION_MESSAGE);
-                 rightGuess=true; break;
-              }
-              if (keyChar == guessList.charAt(i) || keyChar == guessList.toUpperCase().charAt(i)){
-                 JOptionPane.showMessageDialog(this, "you already pressed the word ","Java Hangman - by OODP B_team", JOptionPane.INFORMATION_MESSAGE);
-                 rightGuess=true; break;
-              }
-           }
-           // concatenate the "key pressed" to the list of all chars pressed
-           if(Character.isAlphabetic(keyChar)&&(guessList.indexOf(keyChar)<0)){
-        	   guessList = guessList+keyChar;
-           }
-           // is the "key pressed" is one of the chars in the hidden word, then define it as known
-           // in the knownChars array
-           for(int i=0; i<hiddenWord.length(); i++)
-           {
-              if (keyChar == hiddenWord.charAt(i) || keyChar == hiddenWord.toUpperCase().charAt(i))
-              {
-                 rightGuess = true;
-                 knownChars[i] = true;
-              }            
-           }
-           // this loop makes "win = false" if there are any unknown characters
-           // otherwise "win = true"
-           win = true;
-           for(int i=0; i<hiddenWord.length(); i++)
-           {
-              if (knownChars[i] == false)
-              {
-                 win = false;
-              }
-           }
-           if (rightGuess == false)
-              missCount++;
+        	enAl.guessWord(keyChar,rightGuess);
         }
         else {
-        	guessTheWord();
+        	enWord.guessWord(keyChar,rightGuess);
         }
         repaint();
         }
      }
-   
-   public void guessTheWord() 
-   {
-      guessWord = JOptionPane.showInputDialog(null, "Guess the entire word:");
-      if (validateGuess(guessWord))
-      {
-         win = true;
-      }
-      else
-      {
-         // you lose
-         missCount = maxMisses;
-      }
-   }
-
+  
 
    // 한 번에 문자를 입력했을 때 맞았는지 아닌지 확인해주는 메소드
    public boolean validateGuess(String guess)
@@ -297,58 +247,7 @@ int levelChoice;
    public void keyReleased( KeyEvent e ) { }
    public void keyTyped( KeyEvent e ) {}
 
-   // 맞았는지 틀렸는지 확인하는 메소드
-   public boolean Checker(Event e, int k)
-   {
-      if (!gameOver)
-      {
-      boolean rightGuess = false;
 
-      // 어떤 키보드가 눌려졌는지 저장해둔다.
-      char keyChar = (char) k;
-      if (keyChar != ' ')
-      {
-        // 이전에 이미 추측한 단어라면 Checker에서 빠져나간다.
-         for(int i=0; i<guessList.length(); i++)
-         {
-           // 입력한 것이 알파벳이 아니라면 경고메시지
-            if(!Character.isLetter(keyChar)){
-               JOptionPane.showMessageDialog(this, "please only alphabet ('a'-'z')","Java Hangman - by OODP B_team", JOptionPane.INFORMATION_MESSAGE);
-               return false;
-            }
-            if (keyChar == guessList.charAt(i) || keyChar == guessList.toUpperCase().charAt(i)){
-               JOptionPane.showMessageDialog(this, "you already pressed the word ","Java Hangman - by OODP B_team", JOptionPane.INFORMATION_MESSAGE);
-               return false;
-            }
-         }
-         // 눌러졌던 글자를 추측한 리스트에다가 저장해준다.
-         guessList = guessList+keyChar;
-         // 키보드에서 눌린 글자가 hiddenWord에 있는 글자라면 Known chars 배열에 known(true)로 바꿔준다.
-         for(int i=0; i<hiddenWord.length(); i++)
-         {
-            if (keyChar == hiddenWord.charAt(i) || keyChar == hiddenWord.toUpperCase().charAt(i))
-            {
-               rightGuess = true;
-               knownChars[i] = true;
-            }
-         }
-         // 일단 승리를 true로 한다음에 loop에서 unknownChar 중에 false가 있다면 win을 false로 바꿔줘서 게임이 끝나지 않게한다.
-         win = true;
-         for(int i=0; i<hiddenWord.length(); i++)
-         {
-            if (knownChars[i] == false)
-            {
-               win = false;
-            }
-         }
-         // 추측한 글자가 맞지 않다면 Miss count를 1증가시킨다.
-         if (rightGuess == false)
-            missCount++;
-      }
-      repaint();
-      }
-      return true;
-   }
     public void mouseMoved(MouseEvent e){}
     public void mouseExited(MouseEvent e){}
     public void mouseReleased(MouseEvent e){}
