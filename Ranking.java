@@ -36,11 +36,11 @@ public class Ranking {
 		this.g = g;
 	} 
 	
-	public void showRanking(boolean win, int missCount, int maxMisses, int userScore) {
+	public void showRanking(boolean win, int missCount, int maxMisses, float userScore) {
 		if ((win == true) || (missCount == maxMisses))
 	      {
 	         g.setColor(Color.BLACK);
-	         g.setFont(new Font("Helvetica", Font.BOLD, 32));
+	         g.setFont(new Font("Helvetica", Font.BOLD, 24));
 	         g.drawString("Ranking",600,200);
 	         
 	         // 점수와 사용자의 이름을 받아서 랭킹에 저장해야됨 
@@ -76,7 +76,10 @@ public class Ranking {
 	public void enterUserName(boolean win, float userScore) {
 		if(win == true) {
 			userName = JOptionPane.showInputDialog(null, "Enter User Name:");
-			map.put(userScore, userName);
+			if(userName == "")
+				map.put(userScore, "익명");
+			else
+				map.put(userScore, userName);
 		}
 	}
 	
@@ -92,10 +95,28 @@ public class Ranking {
         try {
             ////////////////////////////////////////////////////////////////
         	System.out.println("File is about to be made");
-            BufferedWriter out = new BufferedWriter(new FileWriter("out.txt",true));
-            String s = entries.toString();
-
-            out.write(s);
+            BufferedWriter out = new BufferedWriter(new FileWriter("/Users/sungminkim/git/Hangman/Ranking.txt"));
+            
+           
+            String[] users = new String[10];
+            int count = 0;
+            
+            for(Map.Entry<Float, String> tempEntry: entries){
+            	if(count == 10) 
+            		break;
+                System.out.println(tempEntry.getValue() + " = " + tempEntry.getKey());
+                String name = tempEntry.getValue();
+                String score = Float.toString(tempEntry.getKey());
+                users[count++] = name + ": "+ score + "\n";
+            }
+            
+            System.out.println("USER: ");
+            for(int i = count-1; i >= 0; i--) {
+                out.write(users[i]);
+                System.out.println(users[i]);
+            }
+//            String s = entries.toString();
+//            out.write(s + "\n");
 
             out.close();
             ////////////////////////////////////////////////////////////////
