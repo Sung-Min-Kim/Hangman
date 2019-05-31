@@ -72,7 +72,7 @@ public class Ranking {
 	      }
 	}
 	
-	//guessWord = JOptionPane.showInputDialog(null, "Guess the entire word:");
+	//승리하였다면 유저의 이름을 입력받아서 TreeMap에다가 저장해준다.  
 	public void enterUserName(boolean win, float userScore) {
 		if(win == true) {
 			userName = JOptionPane.showInputDialog(null, "Enter User Name:");
@@ -83,7 +83,7 @@ public class Ranking {
 		}
 	}
 	
-	public void showMap() {
+	public void changeRanking() {
 		Set<Entry<Float, String>> entries = map.entrySet();
 //        map = {1=one, 2=two, A=a, B=b, a=A, b=B, 가=ㄱ, 나=ㄴ}
         System.out.println("map = " + map);

@@ -21,7 +21,7 @@ public class enterAlphabet extends hangman implements enterAnswerStrategy,MouseL
 	@Override
 	public void guessWord(char keyChar, boolean rightGuess) {
 		// TODO Auto-generated method stub
-		// if character has previously been choosen, then get out of this method
+		// if character has previously been chosen, then get out of this method
         for(int i=0; i<guessList.length(); i++)
         {
            // if character is not alphabet, alert the message

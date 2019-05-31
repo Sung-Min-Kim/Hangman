@@ -73,55 +73,34 @@ public class Paint {
 
 	      g.setColor(Color.black);
 	      // 팔
-	      g.drawLine(375,270,335,280);
-	      g.drawLine(375,270,415,280);
-	      g.drawLine(335,280,375,250);
-	      g.drawLine(415,280,375,250);
+	      DrawArm arm = new DrawArm(g);
+	      arm.draw();
+
 	      // 다리
-	      g.drawLine(375,400,350,375);
-	      g.drawLine(375,400,400,375);
-	      g.drawLine(350,375,350,400);
-	      g.drawLine(400,375,400,400);
+	      DrawLeg leg = new DrawLeg(g);
+	      leg.draw();
+
 	      // 몸통
-	      g.drawLine(375,250,375,400);
+	      DrawBody body = new DrawBody(g);
+	      body.draw();
 	      // 얼굴
-	      g.drawOval(349,199,51,51);
+	      DrawFace face = new DrawFace(g);
+	      face.draw();
 	      // 얼굴 애니메이션
-	      int c;
-	      for (int i=0; i<22000; i++)
-	      {
-	         // every thousand to slow down
-	         c = i/100;
-	         Color faceHue = new Color(255-c,0,c);
-	         g.setColor(faceHue);
-	         // draw the face with the current color
-	         g.fillOval(350,200,50,50);
-	      }
+	      face.changeFaceColor();
 	      g.setColor(bgColor);
 	      // 팔
-	      g.drawLine(375,270,335,280);
-	      g.drawLine(375,270,415,280);
-	      g.drawLine(335,280,375,250);
-	      g.drawLine(415,280,375,250);
+	      arm.draw();
 	      // 다리
-	      g.drawLine(375,400,350,375);
-	      g.drawLine(375,400,400,375);
-	      g.drawLine(350,375,350,400);
-	      g.drawLine(400,375,400,400);
-
+	      leg.draw();
+	      
 
 	      g.setColor(Color.black);
-	      g.drawLine(375,250,375,400);
-	      // 팔과 다리를 지운다.
-	      // 왼쪽 팔
-	      g.drawLine(375,270,370,330);
-	      // 오른쪽 팔
-	      g.drawLine(375,270,380,330);
-	      // 왼다리
-	      g.drawLine(375,400,370,460);
-	      // 오른다리
-	      g.drawLine(375,400,380,460);
-
+	      arm.eraseArmLeg();
+	      arm.eraseLeft();
+	      arm.eraseRight();
+	      leg.eraseLeft();
+	      leg.eraseRight();
 	   }
 	
 	

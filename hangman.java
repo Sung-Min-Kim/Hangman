@@ -215,7 +215,7 @@ public static int levelChoice;
 	   
 	   rank.enterUserName(win, userScore);
 	   if(win == true)
-		   rank.showMap();
+		   rank.changeRanking();
 	   
 	   
    }
@@ -258,7 +258,7 @@ public static int levelChoice;
    }
 
 
-   // 한 번에 문자를 입력했을 때 맞았는지 아닌지 확인해주는 메소드
+   // 한 번에 정답을 입력했을 때 맞았는지 아닌지 확인해주는 메소드
    public boolean validateGuess(String guess)
    {
       if (guess.equalsIgnoreCase(hiddenWord))

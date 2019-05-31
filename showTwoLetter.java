@@ -24,11 +24,7 @@ public class showTwoLetter implements  HintStrategy{
 		 
 		 System.out.println("showTwoLetter:"+knownChars[0]); 
 		 
-//		 knownChars[0]=true;
-//		 knownChars[hiddenWord.length()-1]=true;
-//		 g.drawString(""+hiddenWord.charAt(0), 0*15+224, 95);
-//		 g.drawString(""+hiddenWord.charAt(hiddenWord.length()-1), 0*15+224, 95);
 		return knownChars;
 	}
 		
-	}
+}
