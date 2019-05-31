@@ -46,10 +46,11 @@ public class Paint {
 	
 	//행맨 그리는 함수 
 	public void drawHangman(int missCount, boolean hanged, Color bgColor) {
+		Animation animation = new Animation(g);
 		switch (missCount)
 	      {
 	      // missCount가 7이 되었을 때 HangMan이 목을 조르는 애니메이션
-	      case 7: animateHang(hanged, bgColor); break;
+	      case 7: animation.animateHang(hanged, bgColor); break;
 	      // 왼쪽 팔
 	      case 6: g.drawLine(375,270,300,280);
 	      // 오른쪽 팔
@@ -64,44 +65,6 @@ public class Paint {
 	      case 1: {g.drawOval(349,199,51,51); g.setColor(new Color(0x00ffcc99)); g.fillOval(350,200,50,50);}
 	      }
 	}
-	
-	
-	//행맨 애니메이션 
-	public void animateHang(boolean hanged, Color bgColor)
-	   {
-	      hanged = true;
-
-	      g.setColor(Color.black);
-	      // 팔
-	      DrawArm arm = new DrawArm(g);
-	      arm.draw();
-
-	      // 다리
-	      DrawLeg leg = new DrawLeg(g);
-	      leg.draw();
-
-	      // 몸통
-	      DrawBody body = new DrawBody(g);
-	      body.draw();
-	      // 얼굴
-	      DrawFace face = new DrawFace(g);
-	      face.draw();
-	      // 얼굴 애니메이션
-	      face.changeFaceColor();
-	      g.setColor(bgColor);
-	      // 팔
-	      arm.draw();
-	      // 다리
-	      leg.draw();
-	      
-
-	      g.setColor(Color.black);
-	      arm.eraseArmLeg();
-	      arm.eraseLeft();
-	      arm.eraseRight();
-	      leg.eraseLeft();
-	      leg.eraseRight();
-	   }
 	
 	
 	// 맞춰야 되는 단어 맞추면 보여주는 함수 
