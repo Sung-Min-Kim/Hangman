@@ -46,23 +46,29 @@ public class Paint {
 	
 	//행맨 그리는 함수 
 	public void drawHangman(int missCount, boolean hanged, Color bgColor) {
+		
+		DrawArm arm = new DrawArm(g);
+		DrawBody body =  new DrawBody(g);
+		DrawFace face =  new DrawFace(g);
+		DrawLeg leg = new DrawLeg(g);		
+		
 		AnimationFacade animation = new AnimationFacade(g);
 		switch (missCount)
 	      {
 	      // missCount가 7이 되었을 때 HangMan이 목을 조르는 애니메이션
 	      case 7: animation.animateHang(hanged, bgColor); break;
 	      // 왼쪽 팔
-	      case 6: g.drawLine(375,270,300,280);
+	      case 6: arm.eraseLeft();
 	      // 오른쪽 팔
-	      case 5: g.drawLine(375,270,450,280);
+	      case 5: arm.eraseRight();
 	      // 왼쪽 다리
-	      case 4: g.drawLine(375,400,325,450);
+	      case 4: leg.eraseLeft();
 	      // 오른쪽 다리
-	      case 3: g.drawLine(375,400,425,450);
+	      case 3: leg.eraseRight();
 	      // 몸통
-	      case 2: g.drawLine(375,250,375,400);
+	      case 2: body.draw();
 	      // 얼굴
-	      case 1: {g.drawOval(349,199,51,51); g.setColor(new Color(0x00ffcc99)); g.fillOval(350,200,50,50);}
+	      case 1:face.draw(); 	
 	      }
 	}
 	
@@ -94,7 +100,7 @@ public class Paint {
 	public void showWin(boolean win, boolean gameOver, String hiddenWord) {
 		if (win == true)
 	      {
-			 hangman.stop_Main_Sound();
+//			 hangman.stop_Main_Sound();
 	         g.setColor(new Color(0x00009900));
 	         g.setColor(Color.CYAN);
 	         g.drawString("You Win!",600,50);
