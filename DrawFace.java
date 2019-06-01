@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class DrawFace {
+public class DrawFace implements Drawing {
 	Graphics g;
 	public DrawFace(Graphics g) {
 		this.g = g;

@@ -1,31 +1,29 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Animation {
+public class AnimationFacade {
 	public Graphics g;
 	
-	public Animation(Graphics g) {
+	public AnimationFacade(Graphics g) {
 		this.g = g;
 	}
 	
 	public void animateHang(boolean hanged, Color bgColor)
 	   {
+	      DrawArm arm = new DrawArm(g);
+	      DrawLeg leg = new DrawLeg(g);
+	      DrawBody body = new DrawBody(g);
+	      DrawFace face = new DrawFace(g);
 	      hanged = true;
 
 	      g.setColor(Color.black);
 	      // 팔
-	      DrawArm arm = new DrawArm(g);
 	      arm.draw();
-
 	      // 다리
-	      DrawLeg leg = new DrawLeg(g);
 	      leg.draw();
-
 	      // 몸통
-	      DrawBody body = new DrawBody(g);
 	      body.draw();
 	      // 얼굴
-	      DrawFace face = new DrawFace(g);
 	      face.draw();
 	      // 얼굴 애니메이션
 	      face.changeFaceColor();
@@ -35,7 +33,7 @@ public class Animation {
 	      // 다리
 	      leg.draw();
 	      
-
+	      //얼굴 색깔변화  
 	      g.setColor(Color.black);
 	      arm.eraseArmLeg();
 	      arm.eraseLeft();

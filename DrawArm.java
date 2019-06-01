@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
-public class DrawArm {
+public class DrawArm implements Drawing{
 	Graphics g;
 	public DrawArm(Graphics g) {
 		this.g = g;

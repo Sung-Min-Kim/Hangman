@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
-public class DrawLeg {
+public class DrawLeg implements Drawing {
 	Graphics g;
 	public DrawLeg(Graphics g) {
 		this.g = g;

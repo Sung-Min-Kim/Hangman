@@ -46,7 +46,7 @@ public class Paint {
 	
 	//행맨 그리는 함수 
 	public void drawHangman(int missCount, boolean hanged, Color bgColor) {
-		Animation animation = new Animation(g);
+		AnimationFacade animation = new AnimationFacade(g);
 		switch (missCount)
 	      {
 	      // missCount가 7이 되었을 때 HangMan이 목을 조르는 애니메이션
