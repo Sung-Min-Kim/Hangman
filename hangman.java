@@ -1,11 +1,17 @@
 import java.awt.*;
 import java.applet.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class hangman extends Applet implements MouseListener, MouseMotionListener, KeyListener,ItemListener{
@@ -34,6 +40,7 @@ public static long startTime = 0, endTime = 0;
 public static int rightCount = 0;
 //레벨 별 점수 계산을 위한 변수 
 public static int levelChoice;
+static Clip clip; //사운드를 위한 변수 
    //처음에 initialize해주는 메소드 고
    public void init()
    {
@@ -47,11 +54,31 @@ public static int levelChoice;
       // 유저에게 메시지를 띄워서 정보를 주는 Dialog
       JOptionPane.showMessageDialog(this, "Use your keyboard to guess each letter.", "Java Hangman - by OODP B_team", JOptionPane.INFORMATION_MESSAGE);
       JOptionPane.showMessageDialog(this, "Click on the screen to activate. Have fun!", "Java Hangman - by OODP B_team", JOptionPane.INFORMATION_MESSAGE);
+      
+      Main_Sound("/Users/sungminkim/git/Hangman/Sound/eheyaha.wav");//메인 프레임 배경음악 절대 경로를 인식해주세요! 
       // newGame 메소드 실행
       newGame();
    }
    //새로운 게임을 실행하는 메소드
    
+   
+ //메인 배경음 메소
+   public static void Main_Sound(String file) {
+	   try {
+		   AudioInputStream ais =
+				   AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+		    clip = AudioSystem.getClip();
+		    clip.open(ais);
+		    clip.start();
+	   }catch(Exception e) {
+		   e.printStackTrace();
+	   }
+   }
+   // 메인 배경음악 종료 메소드
+   public static void stop_Main_Sound() {
+	   clip.stop();
+	   clip.close();
+   }
    
    public void newGame()
    {	

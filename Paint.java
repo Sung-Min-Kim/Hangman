@@ -94,6 +94,7 @@ public class Paint {
 	public void showWin(boolean win, boolean gameOver, String hiddenWord) {
 		if (win == true)
 	      {
+			 hangman.stop_Main_Sound();
 	         g.setColor(new Color(0x00009900));
 	         g.setColor(Color.CYAN);
 	         g.drawString("You Win!",600,50);
