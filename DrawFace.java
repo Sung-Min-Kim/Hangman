@@ -8,7 +8,9 @@ public class DrawFace implements Drawing {
 	}
 	
 	public void draw() {
-		g.drawOval(349,199,51,51);
+		g.drawOval(349,199,51,51); 
+		g.setColor(new Color(0x00ffcc99)); 
+		g.fillOval(350,200,50,50);
 	}
 	
 	public void drawWithCurrentColor() {
