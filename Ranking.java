@@ -46,7 +46,9 @@ public class Ranking {
 	         // 점수와 사용자의 이름을 받아서 랭킹에 저장해야됨 
 	  	      try{
 	              //파일 객체 생성
-	              File file = new File("/Users/sungminkim/git/Hangman/Ranking.txt");
+	              File file = new File("Ranking.txt");
+	           
+	              
 	              int count = 0;
 	              String str;
 	              
@@ -62,6 +64,8 @@ public class Ranking {
 	              }
 	              //.readLine()은 끝에 개행문자를 읽지 않는다.            
 	              bufReader.close();
+	              filereader.close();
+//	              file.close();
 	          }catch (FileNotFoundException e) {
 	              // TODO: handle exception
 	          }catch(IOException e){
@@ -72,7 +76,7 @@ public class Ranking {
 	      }
 	}
 	
-	//승리하였다면 유저의 이름을 입력받아서 TreeMap에다가 저장해준다.  
+	//guessWord = JOptionPane.showInputDialog(null, "Guess the entire word:");
 	public void enterUserName(boolean win, float userScore) {
 		if(win == true) {
 			userName = JOptionPane.showInputDialog(null, "Enter User Name:");
@@ -83,7 +87,7 @@ public class Ranking {
 		}
 	}
 	
-	public void changeRanking() {
+	public void changeRanking(boolean win) {
 		Set<Entry<Float, String>> entries = map.entrySet();
 //        map = {1=one, 2=two, A=a, B=b, a=A, b=B, 가=ㄱ, 나=ㄴ}
         System.out.println("map = " + map);
@@ -91,11 +95,10 @@ public class Ranking {
         for(Map.Entry<Float, String> tempEntry: entries){
             System.out.println(tempEntry.getValue() + " = " + tempEntry.getKey());
         }
-        System.out.println("End!");
-        try {
+        System.out.println("End!");try {
             ////////////////////////////////////////////////////////////////
         	System.out.println("File is about to be made");
-            BufferedWriter out = new BufferedWriter(new FileWriter("/Users/sungminkim/git/Hangman/Ranking.txt"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("Ranking.txt",true));
             
            
             String[] users = new String[10];
@@ -111,14 +114,9 @@ public class Ranking {
             }
             
             System.out.println("USER: ");
-            for(int i = count-1; i >= 0; i--) {
-                out.write(users[i]);
-                System.out.println(users[i]);
-            }
-//            String s = entries.toString();
-//            out.write(s + "\n");
-
-            out.close();
+            if(win)    
+            out.write(users[0]);
+                out.close();
             ////////////////////////////////////////////////////////////////
           } catch (IOException e) {
               System.err.println(e); // 에러가 있다면 메시지 출력
